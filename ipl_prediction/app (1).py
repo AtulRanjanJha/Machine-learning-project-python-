@@ -1,6 +1,6 @@
 import streamlit as st
 import pickle
-import pandas as ps
+import pandas as pd
 
 teams = ['Sunrisers Hyderabad',
  'Mumbai Indians',
