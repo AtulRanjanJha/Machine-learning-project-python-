@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.6/css/flag-icon.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://media.licdn.com/dms/image/D4E12AQE4y9a9DoqAdw/article-cover_image-shrink_720_1280/0/1705319044514?e=2147483647&v=beta&t=P1vSDT4kL7L_Rzi7iuYeZxWLSGxhL27xSBvazMC5SOc');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 165vh;
+            margin-top: 13%;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.947);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 720px;
+            width: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label, input, select {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .currency-details {
+            text-align: left;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .currency-details h3 {
+            margin-top: 0;
+        }
+        #currency-chart-container {
+            width: 100%;
+        }
+        .flag-icon {
+            margin-right: 5px;
+        }
+        .flag-icon-us:before { content: "\f024"; }
+        .flag-icon-eu:before { content: "\f0e8"; }
+        .flag-icon-gb:before { content: "\f1b3"; }
+        .flag-icon-jp:before { content: "\f1d4"; }
+        .flag-icon-au:before { content: "\f1e6"; }
+        .flag-icon-ca:before { content: "\f0e8"; }
+        .flag-icon-ch:before { content: "\f1e9"; }
+        .flag-icon-cn:before { content: "\f1e9"; }
+        .flag-icon-in:before { content: "\f3f2"; }
+        .flag-icon-nz:before { content: "\f1e6"; }
+        .flag-icon-ru:before { content: "\f1e7"; }
+        .flag-icon-br:before { content: "\f1e7"; }
+        .flag-icon-za:before { content: "\f1e8"; }
+        .flag-icon-sg:before { content: "\f1e6"; }
+        .flag-icon-hk:before { content: "\f1e6"; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Currency Converter</h1>
+        <form id="converter-form">
+            <label for="base_currency">From:</label>
+            <select id="base_currency" name="base_currency">
+                <option value="USD"><span class="flag-icon flag-icon-us"></span> USD - United States Dollar</option>
+                <option value="EUR"><span class="flag-icon flag-icon-eu"></span> EUR - Euro</option>
+                <option value="GBP"><span class="flag-icon flag-icon-gb"></span> GBP - British Pound</option>
+                <option value="JPY"><span class="flag-icon flag-icon-jp"></span> JPY - Japanese Yen</option>
+                <option value="AUD"><span class="flag-icon flag-icon-au"></span> AUD - Australian Dollar</option>
+                <option value="CAD"><span class="flag-icon flag-icon-ca"></span> CAD - Canadian Dollar</option>
+                <option value="CHF"><span class="flag-icon flag-icon-ch"></span> CHF - Swiss Franc</option>
+                <option value="CNY"><span class="flag-icon flag-icon-cn"></span> CNY - Chinese Yuan</option>
+                <option value="INR"><span class="flag-icon flag-icon-in"></span> INR - Indian Rupee</option>
+                <option value="NZD"><span class="flag-icon flag-icon-nz"></span> NZD - New Zealand Dollar</option>
+                <option value="RUB"><span class="flag-icon flag-icon-ru"></span> RUB - Russian Ruble</option>
+                <option value="BRL"><span class="flag-icon flag-icon-br"></span> BRL - Brazilian Real</option>
+                <option value="ZAR"><span class="flag-icon flag-icon-za"></span> ZAR - South African Rand</option>
+                <option value="SGD"><span class="flag-icon flag-icon-sg"></span> SGD - Singapore Dollar</option>
+                <option value="HKD"><span class="flag-icon flag-icon-hk"></span> HKD - Hong Kong Dollar</option>
+                <!-- Add more currencies as needed -->
+            </select>
+
+            <label for="target_currency">To:</label>
+            <select id="target_currency" name="target_currency">
+                <option value="USD"><span class="flag-icon flag-icon-us"></span> USD - United States Dollar</option>
+                <option value="EUR"><span class="flag-icon flag-icon-eu"></span> EUR - Euro</option>
+                <option value="GBP"><span class="flag-icon flag-icon-gb"></span> GBP - British Pound</option>
+                <option value="JPY"><span class="flag-icon flag-icon-jp"></span> JPY - Japanese Yen</option>
+                <option value="AUD"><span class="flag-icon flag-icon-au"></span> AUD - Australian Dollar</option>
+                <option value="CAD"><span class="flag-icon flag-icon-ca"></span> CAD - Canadian Dollar</option>
+                <option value="CHF"><span class="flag-icon flag-icon-ch"></span> CHF - Swiss Franc</option>
+                <option value="CNY"><span class="flag-icon flag-icon-cn"></span> CNY - Chinese Yuan</option>
+                <option value="INR"><span class="flag-icon flag-icon-in"></span> INR - Indian Rupee</option>
+                <option value="NZD"><span class="flag-icon flag-icon-nz"></span> NZD - New Zealand Dollar</option>
+                <option value="RUB"><span class="flag-icon flag-icon-ru"></span> RUB - Russian Ruble</option>
+                <option value="BRL"><span class="flag-icon flag-icon-br"></span> BRL - Brazilian Real</option>
+                <option value="ZAR"><span class="flag-icon flag-icon-za"></span> ZAR - South African Rand</option>
+                <option value="SGD"><span class="flag-icon flag-icon-sg"></span> SGD - Singapore Dollar</option>
+                <option value="HKD"><span class="flag-icon flag-icon-hk"></span> HKD - Hong Kong Dollar</option>
+                <!-- Add more currencies as needed -->
+            </select>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+
+            <button type="submit">Convert</button>
+        </form>
+
+        <h2 id="result"></h2>
+
+        <div class="currency-details" id="currency-details">
+            <h3>Currency Details</h3>
+            <p>Select a currency to see its details.</p>
+            <div id="currency-chart-container" style="display: none;">
+                <canvas id="currencyDetailChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <canvas id="currencyChart" width="400" height="200"></canvas>
+
+        <!-- New graph comparing all currencies with USD -->
+        <h2>Currency Comparison with USD</h2>
+        <canvas id="comparisonChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        const currencyInfo = {
+            USD: {
+                name: "USD - United States Dollar",
+                symbol: "$",
+                launchDate: "1792",
+                historicalRates: [1, 1, 1, 1, 1] // Example data for 5 years
+            },
+            EUR: {
+                name: "EUR - Euro",
+                symbol: "€",
+                launchDate: "1999",
+                historicalRates: [0.9, 0.91, 0.92, 0.93, 0.9] // Example data for 5 years
+            },
+            GBP: {
+                name: "GBP - British Pound",
+                symbol: "£",
+                launchDate: "1694",
+                historicalRates: [0.75, 0.76, 0.77, 0.78, 0.75] // Example data for 5 years
+            },
+            JPY: {
+                name: "JPY - Japanese Yen",
+                symbol: "¥",
+                launchDate: "1871",
+                historicalRates: [110, 111, 112, 113, 110] // Example data for 5 years
+            },
+            AUD: {
+                name: "AUD - Australian Dollar",
+                symbol: "A$",
+                launchDate: "1966",
+                historicalRates: [1.3, 1.31, 1.32, 1.33, 1.3] // Example data for 5 years
+            },
+            CAD: {
+                name: "CAD - Canadian Dollar",
+                symbol: "C$",
+                launchDate: "1858",
+                historicalRates: [1.25, 1.26, 1.27, 1.28, 1.25] // Example data for 5 years
+            },
+            CHF: {
+                name: "CHF - Swiss Franc",
+                symbol: "CHF",
+                launchDate: "1850",
+                historicalRates: [0.92, 0.93, 0.94, 0.95, 0.92] // Example data for 5 years
+            },
+            CNY: {
+                name: "CNY - Chinese Yuan",
+                symbol: "¥",
+                launchDate: "1948",
+                historicalRates: [6.5, 6.6, 6.7, 6.8, 6.5] // Example data for 5 years
+            },
+            INR: {
+                name: "INR - Indian Rupee",
+                symbol: "₹",
+                launchDate: "1540",
+                historicalRates: [82, 83, 84, 85, 82] // Example data for 5 years
+            },
+            NZD: {
+                name: "NZD - New Zealand Dollar",
+                symbol: "NZ$",
+                launchDate: "1967",
+                historicalRates: [1.4, 1.41, 1.42, 1.43, 1.4] // Example data for 5 years
+            },
+            RUB: {
+                name: "RUB - Russian Ruble",
+                symbol: "₽",
+                launchDate: "1704",
+                historicalRates: [74, 75, 76, 77, 74] // Example data for 5 years
+            },
+            BRL: {
+                name: "BRL - Brazilian Real",
+                symbol: "R$",
+                launchDate: "1994",
+                historicalRates: [5.2, 5.3, 5.4, 5.5, 5.2] // Example data for 5 years
+            },
+            ZAR: {
+                name: "ZAR - South African Rand",
+                symbol: "R",
+                launchDate: "1961",
+                historicalRates: [15, 16, 17, 18, 15] // Example data for 5 years
+            },
+            SGD: {
+                name: "SGD - Singapore Dollar",
+                symbol: "S$",
+                launchDate: "1967",
+                historicalRates: [1.34, 1.35, 1.36, 1.37, 1.34] // Example data for 5 years
+            },
+            HKD: {
+                name: "HKD - Hong Kong Dollar",
+                symbol: "HK$",
+                launchDate: "1935",
+                historicalRates: [7.75, 7.76, 7.77, 7.78, 7.75] // Example data for 5 years
+            }
+        };
+
+        document.getElementById('converter-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const base_currency = document.getElementById('base_currency').value;
+            const target_currency = document.getElementById('target_currency').value;
+            const amount = document.getElementById('amount').value;
+
+            fetch(`/convert?base_currency=${base_currency}&target_currency=${target_currency}&amount=${amount}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.converted_amount) {
+                        document.getElementById('result').textContent = `Converted Amount: ${data.converted_amount} ${target_currency}`;
+                    } else {
+                        document.getElementById('result').textContent = `Error: ${data.error}`;
+                    }
+                });
+        });
+
+        document.getElementById('base_currency').addEventListener('change', function() {
+            const base_currency = document.getElementById('base_currency').value;
+            const currencyDetail = currencyInfo[base_currency];
+            document.getElementById('currency-details').innerHTML = `
+                <h3>Currency Details</h3>
+                <p><strong>Symbol:</strong> ${currencyDetail.symbol}</p>
+                <p><strong>Launch Date:</strong> ${currencyDetail.launchDate}</p>
+                <p><strong>Exchange Rate:</strong> 1 USD = ${currencyDetail.historicalRates[currencyDetail.historicalRates.length - 1]} ${base_currency}</p>
+                <div id="currency-chart-container">
+                    <canvas id="currencyDetailChart" width="400" height="200"></canvas>
+                </div>
+            `;
+            document.getElementById('currency-chart-container').style.display = 'block';
+            plotCurrencyDetailChart(base_currency, currencyDetail.historicalRates);
+        });
+
+        // Fetch exchange rates and plot the main chart
+        function fetchExchangeRates(base_currency, target_currencies) {
+            const promises = target_currencies.map(currency => fetch(`/convert?base_currency=${base_currency}&target_currency=${currency}&amount=1`)
+                .then(response => response.json())
+                .then(data => data.converted_amount));
+
+            Promise.all(promises).then(values => {
+                plotChart(target_currencies, values);
+            });
+        }
+
+        function plotChart(labels, data) {
+            const ctx = document.getElementById('currencyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Currencies Exchange Rate with respect to INR',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function plotCurrencyDetailChart(base_currency, historicalRates) {
+            const ctx = document.getElementById('currencyDetailChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['5 years ago', '4 years ago', '3 years ago', '2 years ago', 'Last year'],
+                    datasets: [{
+                        label: `Exchange Rate with USD for ${base_currency}`,
+                        data: historicalRates,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function plotComparisonChart(labels, data) {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Exchange Rate with USD',
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const targetCurrencies = ["USD", "EUR", "GBP", "JPY", "AUD", "CAD", "CHF", "CNY", "NZD", "RUB", "BRL", "ZAR", "SGD", "HKD"];
+            fetchExchangeRates("INR", targetCurrencies);
+
+            // Fetch comparison data with USD
+            const allCurrencies = Object.keys(currencyInfo).filter(currency => currency !== "USD");
+            const comparisonPromises = allCurrencies.map(currency => fetch(`/convert?base_currency=USD&target_currency=${currency}&amount=1`)
+                .then(response => response.json())
+                .then(data => data.converted_amount));
+
+            Promise.all(comparisonPromises).then(values => {
+                plotComparisonChart(allCurrencies, values);
+            });
+        });
+    </script>
+</body>
+</html>
