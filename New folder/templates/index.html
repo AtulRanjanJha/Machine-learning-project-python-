@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Prediction Models</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<style>
+    /* Apply styles for the entire page with background image */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('https://static.vecteezy.com/system/resources/previews/027/446/767/large_2x/nighttime-forest-fire-an-unfortunate-natural-event-silhouette-concept-free-photo.jpg');
+}
+
+body{background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+header {
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.model-section {
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 60px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for the form container */
+    border-radius: 20px; /* Rounded corners */
+    padding: 0.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow effect for depth */
+}
+
+.model-section h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.model-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-group {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group label {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.form-group input[type="number"] {
+    margin: 0.2rem 0;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 120px; /* Increased max-width for better fit */
+    font-size: 0.9rem;
+}
+
+input[type="submit"] {
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+input[type="submit"]:hover {
+    background-color: #c0392b;
+}
+
+
+
+
+</style>
+<body>
+    <header>
+        <h1>Forest Fire Prediction Models</h1>
+    </header>
+
+    <main>
+        <section id="classification" class="model-section">
+            <h2>Classification Model</h2>
+            <form action="{{ url_for('predict') }}" method="POST" class="model-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Temperature">Temperature</label>
+                        <input type="number" id="Temperature" name="Temperature" placeholder="Temperature" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ws">Wind Speed</label>
+                        <input type="number" id="Ws" name="Ws" placeholder="Wind Speed" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="FFMC">Fuel Moisture Code</label>
+                        <input type="number" id="FFMC" name="FFMC" placeholder="Fuel Moisture Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="DMC">Duff Moisture Code</label>
+                        <input type="number" id="DMC" name="DMC" placeholder="Duff Moisture Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ISI">Initial Spread Index</label>
+                        <input type="number" id="ISI" name="ISI" placeholder="Initial Spread Index" required>
+                    </div>
+                </div>
+                <input type="submit" value="Predict">
+                {{ prediction_text1 }}
+            </form>
+        </section>
+
+        <section id="regression" class="model-section">
+            <h2>Regression Model</h2>
+            <form action="{{ url_for('predictR') }}" method="POST" class="model-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Temperature1">Temperature</label>
+                        <input type="number" id="Temperature1" name="Temperature" placeholder="Temperature" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Wind_speed">Wind Speed</label>
+                        <input type="number" id="Wind_speed" name="Wind_speed" placeholder="Wind Speed" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="FFMC1">Fuel Moisture Code</label>
+                        <input type="number" id="FFMC1" name="FFMC" placeholder="Fuel Moisture Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="DMC1">Duff Moisture Code</label>
+                        <input type="number" id="DMC1" name="DMC1" placeholder="Duff Moisture Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ISI1">Initial Spread Index</label>
+                        <input type="number" id="ISI1" name="ISI1" placeholder="Initial Spread Index" required>
+                    </div>
+                </div>
+                <input type="submit" value="Predict">
+                {{ prediction_text2 }}
+            </form>
+        </section>
+
+    </main>
+
+</body>
+</html>
