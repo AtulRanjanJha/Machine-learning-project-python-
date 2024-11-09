@@ -1,0 +1,41 @@
+# Wildfire Prediction Model 🔥
+
+This project predicts wildfire occurrences using historical data through machine learning techniques, specifically focusing on classification and regression models. Our model uses Gradient Boosting algorithms to provide high-accuracy predictions that can assist in wildfire risk management and resource allocation.
+
+![Wildfire Prediction Visualization](path/to/your/image.png)
+
+## 📊 Project Overview
+This model forecasts the likelihood of wildfire events and assesses related risk factors like fuel moisture and duff moisture codes. By analyzing key environmental factors, it aims to provide a proactive tool for managing wildfire risks.
+
+## 🧠 Algorithms and Accuracy
+- **Classification Model**: Gradient Boosting Classifier
+  - **Accuracy**: 90%
+  - We chose Gradient Boosting for its superior balance of precision and recall compared to other models like Random Forest and Logistic Regression.
+  
+- **Regression Model**: Gradient Boosting Regressor
+  - **R² Score**: 0.92
+  - **Mean Squared Error (MSE)**: 2.87
+  - The model handles non-linear relationships in data effectively, making it ideal for continuous variable predictions like fire spread potential.
+
+## 🔑 Key Parameters
+The model is trained on the following environmental factors:
+- **Temperature**
+- **Wind Speed**
+- **Fuel Moisture Code (FMC)**
+- **Duff Moisture Code (DMC)**
+- **Initial Spread Index (ISI)**
+
+These parameters are essential as they influence both fire ignition and behavior.
+
+## 📈 Evaluation Metrics
+- **Classification Metrics**: Accuracy, Precision, Recall, F1-score
+- **Regression Metrics**: Mean Absolute Error (MAE), Mean Squared Error (MSE), R²
+
+Our evaluations identified Gradient Boosting models as the top performers for both classification and regression, ensuring reliable predictions for wildfire management.
+
+## 🚀 Getting Started
+To set up the model on your local machine, follow these steps:
+1. Clone this repository:  
+   ```bash
+   git clone https://github.com/yourusername/wildfire-prediction.git
+
