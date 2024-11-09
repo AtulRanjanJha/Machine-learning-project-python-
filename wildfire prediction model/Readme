@@ -1,41 +1,22 @@
-# Wildfire Prediction Model 🔥
+This project focuses on predicting wildfire occurrences using historical data and machine learning techniques. The model incorporates classification and regression algorithms to forecast the likelihood of wildfire events and assess related risk factors such as fuel moisture and duff moisture codes.
 
-This project predicts wildfire occurrences using historical data through machine learning techniques, specifically focusing on classification and regression models. Our model uses Gradient Boosting algorithms to provide high-accuracy predictions that can assist in wildfire risk management and resource allocation.
+Classification and Regression Algorithms
+For classification, we employed the Gradient Boosting Classifier due to its ability to handle complex data relationships and achieve high accuracy, with a final model accuracy of 90%. This model outperformed others in precision and recall, making it suitable for accurate wildfire prediction. Other classification models considered included Random Forest and Logistic Regression, but Gradient Boosting showed the best balance of accuracy and computational efficiency.
 
-![Wildfire Prediction Visualization](path/to/your/image.png)
+For regression, we used the Gradient Boosting Regressor to estimate continuous variables, achieving an R² score of 0.92 and a Mean Squared Error (MSE) of 2.87. This choice was based on its ability to model non-linear relationships in the data, making it effective for continuous variable predictions such as fire spread potential.
 
-## 📊 Project Overview
-This model forecasts the likelihood of wildfire events and assesses related risk factors like fuel moisture and duff moisture codes. By analyzing key environmental factors, it aims to provide a proactive tool for managing wildfire risks.
+Data and Parameters
+Key environmental factors utilized in the model include:
 
-## 🧠 Algorithms and Accuracy
-- **Classification Model**: Gradient Boosting Classifier
-  - **Accuracy**: 90%
-  - We chose Gradient Boosting for its superior balance of precision and recall compared to other models like Random Forest and Logistic Regression.
-  
-- **Regression Model**: Gradient Boosting Regressor
-  - **R² Score**: 0.92
-  - **Mean Squared Error (MSE)**: 2.87
-  - The model handles non-linear relationships in data effectively, making it ideal for continuous variable predictions like fire spread potential.
+Temperature
+Wind Speed
+Fuel Moisture Code (FMC)
+Duff Moisture Code (DMC)
+Initial Spread Index (ISI)
+These parameters are critical as they influence fire ignition and behavior, and are sourced from national weather stations and wildfire incident reports. After preprocessing, the data was normalized and split into training, validation, and test sets.
 
-## 🔑 Key Parameters
-The model is trained on the following environmental factors:
-- **Temperature**
-- **Wind Speed**
-- **Fuel Moisture Code (FMC)**
-- **Duff Moisture Code (DMC)**
-- **Initial Spread Index (ISI)**
+Model Evaluation
+To evaluate classification performance, we used accuracy, precision, recall, and F1-score, with accuracy being the primary metric. For regression, we employed Mean Absolute Error (MAE), Mean Squared Error (MSE), and R² to measure model fit. These metrics helped fine-tune the models, ensuring the best-performing ones were selected for deployment.
 
-These parameters are essential as they influence both fire ignition and behavior.
-
-## 📈 Evaluation Metrics
-- **Classification Metrics**: Accuracy, Precision, Recall, F1-score
-- **Regression Metrics**: Mean Absolute Error (MAE), Mean Squared Error (MSE), R²
-
-Our evaluations identified Gradient Boosting models as the top performers for both classification and regression, ensuring reliable predictions for wildfire management.
-
-## 🚀 Getting Started
-To set up the model on your local machine, follow these steps:
-1. Clone this repository:  
-   ```bash
-   git clone https://github.com/yourusername/wildfire-prediction.git
+By using a robust combination of Gradient Boosting techniques, this project provides an effective tool for proactive wildfire risk management and enhances decision-making for resource allocation and early warning systems.
 
